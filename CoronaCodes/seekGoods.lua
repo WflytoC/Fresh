@@ -30,7 +30,7 @@ function scene:create( event )
 	local bg = display.newRect(0,0,display.contentWidth,display.contentHeight)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0.984,0.737,0.388)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
 
 	if (not box.status) then
@@ -44,29 +44,32 @@ function scene:create( event )
 
 	local start = display.newText("装 点",width/5,40,native.systemFont,18)
 	start.x = width/5/2
-	start.y = 12 + 20
+	start.y = 12 + 20+20
+	start:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(start)
 
-	startField = native.newTextField(width/5*3,12+20,width/5*4-12,28)
+	startField = native.newTextField(width/5*3,12+20+20,width/5*4-12,28)
 	sceneGroup:insert(startField)
 	startField:addEventListener( "userInput", beginListener )
 
 	local finish = display.newText("卸 点",width/5,40,native.systemFont,18)
 	finish.x = width/5/2
-	finish.y = 12 + 40 +20
+	finish.y = 12 + 40 +20+20
+	finish:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(finish)
 
-	finishField = native.newTextField(width/5*3,12+40+20,width/5*4-12,28)
+	finishField = native.newTextField(width/5*3,12+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(finishField)
 		finishField:addEventListener( "userInput", finishListener )
 
 
 	local kind = display.newText("种 类",width/5,40,native.systemFont,18)
 	kind.x = width/5/2
-	kind.y = 12 + 40 +40 +20
+	kind.y = 12 + 40 +40 +20+20
+	kind:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(kind)
 
-	kindField = native.newTextField(width/5*3,12+40+40+20,width/5*4-12,28)
+	kindField = native.newTextField(width/5*3,12+40+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(kindField)
 	kindField:addEventListener( "userInput", typeListener )
 
@@ -74,18 +77,20 @@ function scene:create( event )
 
 	local detail = display.newText("重量(kg)",width/5,40,native.systemFont,18)
 	detail.x = width/5/2
-	detail.y = 12 + 40 +40 +40 +20
+	detail.y = 12 + 40 +40 +40 +20+20
+	detail:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(detail)
 
-	detailField = native.newTextField(width/5*3,12+40+40+40+20,width/5*4-12,28)
+	detailField = native.newTextField(width/5*3,12+40+40+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(detailField)
 
 	local contain = display.newText("体积(L)",width/5,40,native.systemFont,18)
 	contain.x = width/5/2
-	contain.y = 12 + 40 +40 +40 +40 +20
+	contain.y = 12 + 40 +40 +40 +40 +20+20
+	contain:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(contain)
 
-	containField = native.newTextField(width/5*3,12+40+40+40+40+20,width/5*4-12,28)
+	containField = native.newTextField(width/5*3,12+40+40+40+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(containField)
 
 	
@@ -97,10 +102,11 @@ function scene:create( event )
 		label = "找 货",
 		fontSize = 24,
 		textOnly = true,
+		labelColor = {default={ 0, 0, 0 }, over={ 1,1,1 }},
 		onEvent = queryPackage
 	})
 	seekGood.x = width/2
-	seekGood.y = 12 + 40 +40 +40 +40 +40 +32
+	seekGood.y = 12 + 40 +40 +40 +40 +40 +32+20+10
 	sceneGroup:insert(seekGood)
 
 	list = widget.newTableView {

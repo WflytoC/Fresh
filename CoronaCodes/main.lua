@@ -66,8 +66,8 @@ end
 local tabButtons = {
 	{ 
 	label="找车", 
-	defaultFile="icon1.png", 
-	overFile="icon1-down.png", 
+	defaultFile="car32.png", 
+	overFile="car322.png", 
 	width = 32, 
 	height = 32, 
 	onPress=onFirstView, 
@@ -75,27 +75,27 @@ local tabButtons = {
 	selected=true 
 	},
 	{ 
-	label="找货", 
-	defaultFile="icon2.png", 
-	overFile="icon2-down.png", 
+	label="找 货", 
+	defaultFile="package32.png", 
+	overFile="package322.png", 
 	width = 32, 
 	height = 32, 
 	labelColor = { default={ 0.247, 0.737, 0.961}, over={ 0.0, 0.592, 0.314} },
 	onPress=onSecondView 
 	},
 	{ 
-	label="物流", 
-	defaultFile="icon1.png", 
-	overFile="icon1-down.png", 
+	label="物 流", 
+	defaultFile="logistics32.png", 
+	overFile="logistics322.png", 
 	width = 32, 
 	height = 32, 
 	labelColor = { default={ 0.247, 0.737, 0.961}, over={ 0.0, 0.592, 0.314 } },
 	onPress=onThirdView  
 	},
 	{ 
-	label="设置", 
-	defaultFile="icon2.png", 
-	overFile="icon2-down.png", 
+	label="我 的", 
+	defaultFile="user32.png", 
+	overFile="user322.png", 
 	width = 32, 
 	height = 32, 
 	labelColor = { default={ 0.247, 0.737, 0.961 }, over={ 0.0, 0.592, 0.314} },

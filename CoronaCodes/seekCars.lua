@@ -11,7 +11,7 @@ local startProvince,startCity,startStrict
 local finishProvince,finishCity,finishStrict
 local transType = 0
 
-local  tableData = codes.goodTypes
+local  tableData = codes.foodTypes
 local list
 
 local startField,finishField,kindField,tonNumField
@@ -26,7 +26,7 @@ function scene:create( event )
 	local bg = display.newRect(0,0,display.contentWidth,display.contentHeight)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0.016,0.718,0.867)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
 
 
@@ -34,46 +34,51 @@ function scene:create( event )
 
 	local start = display.newText("装 点",width/5,40,native.systemFont,18)
 	start.x = width/5/2
-	start.y = 12 + 20
+	start.y = 12 + 20+20
+	start:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(start)
 
-	startField = native.newTextField(width/5*3,12+20,width/5*4-12,28)
+	startField = native.newTextField(width/5*3,12+20+20,width/5*4-12,28)
 	sceneGroup:insert(startField)
 	startField:addEventListener( "userInput", beginListener )
 
 	local finish = display.newText("卸 点",width/5,40,native.systemFont,18)
 	finish.x = width/5/2
-	finish.y = 12 + 40 +20
+	finish.y = 12 + 40 +20+20
+	finish:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(finish)
 
-	finishField = native.newTextField(width/5*3,12+40+20,width/5*4-12,28)
+	finishField = native.newTextField(width/5*3,12+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(finishField)
 	finishField:addEventListener( "userInput", finishListener )
 
 
 	local kind = display.newText("种 类",width/5,40,native.systemFont,18)
 	kind.x = width/5/2
-	kind.y = 12 + 40 +40 +20
+	kind.y = 12 + 40 +40 +20+20
+	kind:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(kind)
 
-	kindField = native.newTextField(width/5*3,12+40+40+20,width/5*4-12,28)
+	kindField = native.newTextField(width/5*3,12+40+40+20+20,width/5*4-12,28)
 	sceneGroup:insert(kindField)
 	kindField:addEventListener( "userInput", typeListener )
 
 	local tonNum = display.newText("重量(kg)",width/2/2,40,native.systemFont,18)
 	tonNum.x = width/2/2/2
-	tonNum.y = 12 + 40 +40  +40 +20
+	tonNum.y = 12 + 40 +40  +40 +20+20
+	tonNum:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(tonNum)
 
-	tonNumField = native.newTextField(width/2/2+width/2/2/2,12+40+40+40+20,width/2/2-10,28)
+	tonNumField = native.newTextField(width/2/2+width/2/2/2,12+40+40+40+20+20,width/2/2-10,28)
 	sceneGroup:insert(tonNumField)
 
 	local carNum = display.newText("体积(L)",width/2/2,40,native.systemFont,18)
 	carNum.x = width/2/2/2 + width/2
-	carNum.y = 12 + 40 +40 +40 +20
+	carNum.y = 12 + 40 +40 +40 +20+20
+	carNum:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(carNum)
 
-	carNumField = native.newTextField(width/2+width/2/2+width/2/2/2,12+40+40+40+20,width/2/2-10,28)
+	carNumField = native.newTextField(width/2+width/2/2+width/2/2/2,12+40+40+40+20+20,width/2/2-10,28)
 	sceneGroup:insert(carNumField)
 
 	local seekPrice = widget.newButton(
@@ -83,11 +88,11 @@ function scene:create( event )
 		label = "查运价",
 		fontSize = 24,
 		textOnly = true,
-		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
+		labelColor = {default={ 0, 0, 0 }, over={ 1,1,1 }},
 		onEvent = queryPrice
 	})
 	seekPrice.x = width/3/3+width/3/2 
-	seekPrice.y = 12 + 40 +40 +40 +40 +32
+	seekPrice.y = 12 + 40 +40 +40 +40 +32 + 10+20
 	sceneGroup:insert(seekPrice)
 
 	local seekCar = widget.newButton(
@@ -96,12 +101,12 @@ function scene:create( event )
 		height = 64,
 		label = "找 车",
 		fontSize = 24,
-		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
+		labelColor = {default={ 0, 0, 0 }, over={ 1,1,1 }},
 		textOnly = true,
 		onEvent = queryPackage
 	})
 	seekCar.x = width/3/3*2+width/3/2+width/3  
-	seekCar.y = 12 + 40 +40 +40  +40 +32
+	seekCar.y = 12 + 40 +40 +40  +40 +32 + 10+20
 	sceneGroup:insert(seekCar)
 
 	list = widget.newTableView {
@@ -251,7 +256,7 @@ function onRowTouch( event )
         
         local id = event.row.index
         kindField.text = tableData[id]
-        transType = id
+        transType = (event.row.index - 1)/3 + 1
         list.isVisible = false
     end
     return true

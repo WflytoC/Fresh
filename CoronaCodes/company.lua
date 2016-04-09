@@ -20,8 +20,8 @@ codes["邦送物流"] = "bangsongwuliu"
 codes["大田物流"] = "datianwuliu"
 codes["国通快递"] = "guotongkuaidi"
 
-codes.goodTypes = {"冷冻运输（-18℃— -22℃）","冷藏运输（0℃—7℃）","恒温运输（18℃—22℃）"}
-
+codes.foodTypes = {"速冻食品","肉类","冰淇淋","水果","蔬菜","饮料","鲜奶制品","巧克力","糖果"}
+codes.goodTypes = {"冷冻运输(-18℃- -22℃)","冷藏运输(0℃- 7℃)","恒温运输(18℃- 22℃)"}
 
 
 return codes

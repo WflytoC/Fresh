@@ -23,12 +23,13 @@ function scene:create( event )
 	local bg = display.newRect(0,0,width,height)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0.713,0.412,0.823)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
 
 	local company = display.newText("公 司",width/5,56,native.systemFont,18)
 	company.x = width/5/2
 	company.y = height/12+28
+	company:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(company)
 
 	companyField = native.newTextField(width/5*3,height/12+28,width/5*4-12,32)
@@ -38,6 +39,7 @@ function scene:create( event )
 	local order = display.newText("单号",width/5,56,native.systemFont,18)
 	order.x = width/5/2
 	order.y = height/12+28+56
+	order:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(order)
 
 	orderField = native.newTextField(width/5*3,height/12+28+56,width/5*4-12,32)
@@ -53,7 +55,7 @@ function scene:create( event )
 		label = "查 询",
 		fontSize = 24,
 		textOnly = true,
-		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
+		labelColor = {default={ 0, 0, 0 }, over={ 1,1,1 }},
 		onEvent = queryPackage
 	})
 	query.x = width / 2

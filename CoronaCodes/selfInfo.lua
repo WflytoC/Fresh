@@ -22,26 +22,28 @@ function scene:create( event )
 	{
 		width = width/4,
 		height = 44,
-		label = "返回",
+		label = "< 返回",
 		textOnly = true,
-		fontSize = 24,
+		fontSize = 18,
+		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
 		onEvent = backTo
 	})
 	back.x = width/4/2  
-	back.y = 22
+	back.y = 22 -4
 	sceneGroup:insert(back)
 
-	titleInfo = display.newText("标题",width/2,44,native.systemFont,15)
+	titleInfo = display.newText("标题",width/2,44,native.systemFont,16)
 	titleInfo.x = width/2
-	titleInfo.y = 22
+	titleInfo.anchorY = 0
+	titleInfo.y = 8
 	sceneGroup:insert(titleInfo)
 
 	
 
 	list = widget.newTableView {
-		top = 44,
+		top = 38,
 		width = width,
-		height = height - 44 ,
+		height = height - 38 ,
 		onRowRender = onRowRender,
 		onRowTouch = onRowTouch,
 		listener = scrollListener

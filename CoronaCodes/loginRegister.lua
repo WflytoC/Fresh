@@ -25,8 +25,34 @@ function scene:create( event )
 	local bg = display.newRect(0,0,width,height)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0.5,0.5,0.5)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
+
+	local bar = display.newRect(0,0,width,38)
+	bar.anchorX = 0
+	bar.anchorY = 0
+	bar:setFillColor(0.310,0.549,0.659)
+	sceneGroup:insert(bar)
+
+
+local options = 
+{
+    --parent = textGroup,
+    text = "鲜 速 达",     
+    x = 0,
+    y = 8,
+    height = 64,
+    width = width,     --required for multi-line and alignment
+    font = native.systemFontBold,   
+    fontSize = 16,
+    align = "center"  --new alignment parameter
+}
+
+	local nav = display.newText(options)
+	nav:setFillColor(0.878,0.945,0.957)
+	nav.anchorX = 0
+	nav.anchorY = 0
+	sceneGroup:insert(nav)
 
 	local function handleRegister( event )
 		if ("ended" == event.phase) then 
@@ -69,19 +95,21 @@ function scene:create( event )
 
 	local goods = display.newText("货 主",width/2/2,40,native.systemFont,18)
 	goods.x = width/2/2/2
-	goods.y = 64
+	goods.y = 64 + 20
+	goods:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(goods)
 --
 	local car = display.newText("车 主",width/2/2,40,native.systemFont,18)
 	car.x = width/2/2/2 + width/2
-	car.y = 64
+	car.y = 64 + 20
+	car:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(car)
 
 	local radioGroup = display.newGroup()
 	goodsRadio = widget.newSwitch
 	{
     	left = width/2/2,
-    	top = 48,
+    	top = 48 + 20,
     	style = "radio",
     	id = "one",
     	initialSwitchState = true,
@@ -92,7 +120,7 @@ function scene:create( event )
 	carRadio = widget.newSwitch
 	{
     	left = width/2+width/2/2,
-    	top = 48,
+    	top = 48 + 20,
     	style = "radio",
     	id = "two",
     	onPress = onSwitchPress
@@ -102,19 +130,21 @@ function scene:create( event )
 
 	local name = display.newText("号码",width/5,56,native.systemFont,18)
 	name.x = width/5/2
-	name.y = height/4+28
+	name.y = height/4+28 + 20
+	name:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(name)
 
-	nameField = native.newTextField(width/5*3,height/4+28,width/5*4-12,32)
+	nameField = native.newTextField(width/5*3,height/4+28 + 20,width/5*4-12,32)
 	name.inputType = "number"
 	sceneGroup:insert(nameField)
 
 	local pass = display.newText("密码",width/5,56,native.systemFont,18)
 	pass.x = width/5/2
-	pass.y = height/4+28+56
+	pass.y = height/4+28+56 + 20
+	pass:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(pass)
 
-	passField = native.newTextField(width/5*3,height/4+28+56,width/5*4-12,32)
+	passField = native.newTextField(width/5*3,height/4+28+56 + 20,width/5*4-12,32)
 	sceneGroup:insert(passField)
 	passField.isSecure = true
 
@@ -124,10 +154,11 @@ function scene:create( event )
 		height = 100,
 		label = "登 陆",
 		textOnly = true,
+		labelColor = { default={ 0, 0, 0 }, over={ 0, 0, 0, 0.5 } },
 		onEvent = handleLogin
 	 })
 	login.x = 30
-	login.y = height/4 + 56*2.5
+	login.y = height/4 + 56*2.5 + 20
 	login.anchorX = 0
 	login.anchorY = 0
 	sceneGroup:insert(login)
@@ -138,10 +169,11 @@ function scene:create( event )
 		height = 100,
 		label = "注 册",
 		textOnly = true,
+		labelColor = { default={ 0, 0, 0 }, over={ 0, 0, 0, 0.5 } },
 		onEvent = handleRegister
 	})
 	register.x = width / 2
-	register.y = height/4 + 56*2.5
+	register.y = height/4 + 56*2.5 + 20
 	register.anchorY = 0
 	sceneGroup:insert(register)
 
@@ -151,10 +183,11 @@ function scene:create( event )
 		height = 100,
 		label = "跳 过",
 		textOnly = true,
+		labelColor = { default={ 0, 0, 0 }, over={ 0, 0, 0, 0.5 } },
 		onEvent = handleSkip
 	})
 	skip.x = width -30
-	skip.y = height/4 + 56*2.5
+	skip.y = height/4 + 56*2.5 + 20
 	skip.anchorX = 1
 	skip.anchorY = 0
 	sceneGroup:insert(skip)

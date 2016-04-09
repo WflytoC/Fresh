@@ -6,7 +6,7 @@ local width = display.contentWidth
 local height = display.contentHeight
 local tableData = {}
 local list
-local back,titleInfo
+local back,titleInfo,showMap
  
 
 function scene:create( event )
@@ -22,26 +22,42 @@ function scene:create( event )
 	{
 		width = width/4,
 		height = 44,
-		label = "返回",
+		label = "< 返回",
 		textOnly = true,
-		fontSize = 24,
+		fontSize = 18,
+		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
 		onEvent = backTo
 	})
 	back.x = width/4/2  
-	back.y = 22
+	back.y = 22-4
 	sceneGroup:insert(back)
 
-	titleInfo = display.newText("标题",width/2,44,native.systemFont,15)
+	showMap  = widget.newButton(
+	{
+		width = width/4,
+		height = 44,
+		label = "导航",
+		textOnly = true,
+		fontSize = 18,
+		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
+		onEvent = navigateMap
+	})
+	showMap.x = width - width/4/2  
+	showMap.y = 22-4
+	sceneGroup:insert(showMap)
+
+	titleInfo = display.newText("标题",width/2,44,native.systemFont,16)
 	titleInfo.x = width/2
-	titleInfo.y = 22
+	titleInfo.anchorY = 0
+	titleInfo.y = 8
 	sceneGroup:insert(titleInfo)
 
 	
 
 	list = widget.newTableView {
-		top = 52,
+		top = 38,
 		width = width,
-		height = height - 52 - 50 ,
+		height = height - 38 ,
 		onRowRender = onRowRender,
 		onRowTouch = onRowTouch,
 		listener = scrollListener
@@ -161,6 +177,18 @@ function backTo( event )
 	if ("ended" == event.phase) then
 	globalVars.isShow = false
 		composer.gotoScene(globalVars.origin)
+	end
+end
+
+function navigateMap( event )
+	if ("ended" == event.phase) then
+	globalVars.isShow = true
+	local options = {
+    			effect = "fade",
+    			time = 800,
+    			params = tableData
+			}
+			composer.gotoScene( "map", options )
 	end
 end
 

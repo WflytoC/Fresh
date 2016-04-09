@@ -11,14 +11,16 @@ local codes = require("company")
 local startProvince,startCity,startStrict
 local finishProvince,finishCity,finishStrict
 local transType = 0
-local bigType = 1
+local bigType = 2
 local add
 local back,titleInfo
+local latitude,longitude
 
 
-
-local  tableData = codes.goodTypes
-local list
+--列表数据源
+local  tableData,otherData
+--种类列表
+local list,other
 
 local box
 
@@ -27,85 +29,101 @@ local width = display.contentWidth
 local height = display.contentHeight
 
 function scene:create( event )
+
+	print("scene:create")
 	local sceneGroup = self.view
 
 	local bg = display.newRect(0,0,display.contentWidth,display.contentHeight)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0.2,0.2,0.2)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
+
+	local bar = display.newRect(0,0,width,38)
+	bar.anchorX = 0
+	bar.anchorY = 0
+	bar:setFillColor(0,0.5,0.5)
+	sceneGroup:insert(bar)
 
 
 	back  = widget.newButton(
 	{
 		width = width/4,
 		height = 44,
-		label = "返回",
-		fontSize = 24,
+		label = "< 返回",
+		fontSize = 18,
 		textOnly = true,
+		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
 		onEvent = backTo
 	})
 	back.x = width/4/2  
-	back.y = 22
+	back.y = 22-4
 	sceneGroup:insert(back)
 
 	titleInfo = display.newText("上传你的数据",width/2,44,native.systemFont,15)
 	titleInfo.x = width/2
-	titleInfo.y = 22
+	titleInfo.anchorY = 0
+	titleInfo.y = 8
 	sceneGroup:insert(titleInfo)
 
 	local start = display.newText("装 点",width/5,40,native.systemFont,18)
 	start.x = width/5/2
-	start.y = 12 + 20 + 28
+	start.y = 12 + 20 + 28+ 20
+	start:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(start)
 
-	startField = native.newTextField(width/5*3,12+20+ 28,width/5*4-12,28)
+	startField = native.newTextField(width/5*3,12+20+ 28+ 20,width/5*4-12,28)
 	sceneGroup:insert(startField)
 	startField:addEventListener( "userInput", beginListener )
 
 	local finish = display.newText("卸 点",width/5,40,native.systemFont,18)
 	finish.x = width/5/2
-	finish.y = 12 + 40 +20+ 28
+	finish.y = 12 + 40 +20+ 28+ 20
+	finish:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(finish)
 
-	finishField = native.newTextField(width/5*3,12+40+20+ 28,width/5*4-12,28)
+	finishField = native.newTextField(width/5*3,12+40+20+ 28+ 20,width/5*4-12,28)
 	sceneGroup:insert(finishField)
 	finishField:addEventListener( "userInput", finishListener )
 
 	local kind = display.newText("种 类",width/5,40,native.systemFont,18)
 	kind.x = width/5/2
-	kind.y = 12 + 40 +40 +20+ 28
+	kind.y = 12 + 40 +40 +20+ 28+ 20
+	kind:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(kind)
 
-	kindField = native.newTextField(width/5*3,12+40+40+20+ 28,width/5*4-12,28)
+	kindField = native.newTextField(width/5*3,12+40+40+20+ 28+ 20,width/5*4-12,28)
 	sceneGroup:insert(kindField)
 	kindField:addEventListener( "userInput", typeListener )
 
 
 	local detail = display.newText("详 情",width/5,40,native.systemFont,18)
 	detail.x = width/5/2
-	detail.y = 12 + 40 +40 +40 +40+20+ 28
+	detail.y = 12 + 40 +40 +40 +40+20+ 28+ 20
+	detail:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(detail)
 
-	detailBox = native.newTextBox(width/5*3,12+40+40+40+40+20+20+ 28,width/5*4-12,56)
+	detailBox = native.newTextBox(width/5*3,12+40+40+40+40+20+20+ 28+ 20,width/5*4-12,56)
 	detailBox.isEditable = true
 	sceneGroup:insert(detailBox)
 
 
 	local tonNum = display.newText("重量(kg)",width/2/2,40,native.systemFont,18)
 	tonNum.x = width/2/2/2
-	tonNum.y = 12 + 40 +40 +40 +20+ 28
+	tonNum.y = 12 + 40 +40 +40 +20+ 28+ 20
+	tonNum:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(tonNum)
 
-	tonNumField = native.newTextField(width/2/2+width/2/2/2,12+40+40+40+20+ 28,width/2/2-10,28)
+	tonNumField = native.newTextField(width/2/2+width/2/2/2,12+40+40+40+20+ 28+ 20,width/2/2-10,28)
 	sceneGroup:insert(tonNumField)
 
 	local carNum = display.newText("体积(L)",width/2/2,40,native.systemFont,18)
 	carNum.x = width/2/2/2 + width/2
-	carNum.y = 12 + 40 +40 +40  +20+ 28
+	carNum.y = 12 + 40 +40 +40  +20+ 28+ 20
+	carNum:setFillColor(0.310,0.549,0.659)
 	sceneGroup:insert(carNum)
 
-	carNumField = native.newTextField(width/2+width/2/2+width/2/2/2,12+40+40+40+20+ 28,width/2/2-10,28)
+	carNumField = native.newTextField(width/2+width/2/2+width/2/2/2,12+40+40+40+20+ 28+ 20,width/2/2-10,28)
 	sceneGroup:insert(carNumField)
 
 	local btnTitle
@@ -115,6 +133,8 @@ function scene:create( event )
 		btnTitle = "添加车辆"
 	end
 
+
+
 	add = widget.newButton(
 	{
 		width = width / 3,
@@ -122,7 +142,7 @@ function scene:create( event )
 		label = btnTitle,
 		fontSize = 24,
 		textOnly = true,
-		labelColor = {default={ 1, 1, 1 }, over={ 1,1,1 }},
+		labelColor = {default={ 0, 0, 0 }, over={ 1,1,1 }},
 		onEvent = addItem
 	})
 	add.x = width/2
@@ -139,21 +159,45 @@ function scene:create( event )
 		listener = scrollListener
 	}
 	list.isVisible = false
-	showTableView()
+
+	other = widget.newTableView {
+		top = 12+40+40+40+40+20+20+32+64+28,
+		width = width,
+		isBounceEnabled = false,
+		height = 3 * 28 ,
+		onRowRender = onRowRender,
+		onRowTouch = onRowTouchOther,
+		listener = scrollListener
+	}
+	other.isVisible = false
+
+	tableData = codes.goodTypes
+	otherData = codes.foodTypes
+
+	box = GGData:new("user")
+		local role 
+		if (box.role == "carUser") then
+			add:setLabel( "添加车辆" )
+			bigType = 1
+		else
+			add:setLabel( "添加货物" )
+			bigType = 2
+		end
+		showTableView()
+		showTableViewOther()
+		sceneGroup:insert(list)
+		sceneGroup:insert(other)
 
 
 end
 
 function scene:show( event )
+	print("scene:show")
 	local sceneGroup = self.view
 	local phase = event.phase
 	globalVars.isShow = true
-	box = GGData:new("user")
-	if (box.role == "carUser") then
-		bigType = 2
-	else
-		bigType = 1
-	end
+		
+
 	if phase == "will" then
 		globalVars.tabBar.isVisible = false
 		startField.isVisible = true
@@ -162,15 +206,11 @@ function scene:show( event )
 		detailBox.isVisible = true
 		carNumField.isVisible = true
 		tonNumField.isVisible = true
-		box = GGData:new("user")
-		local role 
-		if (box.role == "carUser") then
-			add:setLabel( "添加车辆" )
-			bigType = 2
-		else
-			add:setLabel( "添加货物" )
-			bigType = 1
-		end
+
+		
+
+
+	
 
 		
 	elseif phase == "did" then
@@ -189,7 +229,9 @@ function scene:show( event )
 				globalVars.judge = false
 			end
 		end
+
   end
+
 
 end
 
@@ -248,7 +290,19 @@ end
 function typeListener( event )
 
     if ( event.phase == "began" ) then
-    	list.isVisible = true
+    	box = GGData:new("user")
+		if (box.role == "carUser") then
+			add:setLabel( "添加车辆" )
+			bigType = 1
+			list.isVisible = true
+			other.isVisible = false
+		else
+			add:setLabel( "添加货物" )
+			bigType = 2
+			other.isVisible = true
+			list.isVisible = false
+		end
+
     elseif ( event.phase == "ended" or event.phase == "submitted" ) then
 
 
@@ -258,6 +312,7 @@ function typeListener( event )
 end
 
 function showTableView()
+
 	for i = 1,#tableData do
 		list:insertRow {
 		rowHeight = 44,
@@ -266,6 +321,21 @@ function showTableView()
 		lineColor = {0.90,0.90,0.90},
 		params = {
 			name = tableData[i]
+		   }
+		}
+	end
+end
+
+function showTableViewOther()
+
+	for i = 1,#otherData do
+		other:insertRow {
+		rowHeight = 44,
+		isCategory = false,
+		rowColor = {0,0.5,0.5},
+		lineColor = {0.90,0.90,0.90},
+		params = {
+			name = otherData[i]
 		   }
 		}
 	end
@@ -294,8 +364,19 @@ function onRowTouch( event )
         
         local id = event.row.index
         kindField.text = tableData[id]
-        transType = id
+        transType = (id - 1)%3 + 1
         list.isVisible = false
+    end
+    return true
+end
+
+function onRowTouchOther( event )
+    if event.phase == "release" then
+        
+        local id = event.row.index
+        kindField.text = otherData[id]
+        transType = (id - 1)%3 + 1
+        other.isVisible = false
     end
     return true
 end
@@ -312,7 +393,7 @@ function addItem(event)
             headers["Content-Type"] = "application/x-www-form-urlencoded"
 			local params = {}
             params.headers = headers
-			local body = "user_name=" .. box.phone .. "&startProvince=" .. urlEncode(startProvince) .. "&startCity=" .. urlEncode(startCity) .. "&startStrict=" .. urlEncode(startStrict) .. "&endProvince=" .. urlEncode(finishProvince) .. "&endCity=" .. urlEncode(finishCity) .. "&endStrict=" .. urlEncode(finishStrict) .. "&detail=" .. urlEncode(detailBox.text) .. "&weigh=" .. tonumber(tonNumField.text) .. "&volume=" .. tonumber(carNumField.text) .. "&bigType=" .. tonumber(bigType)  .. "&kind=" .. transType
+			local body = "user_name=" .. box.phone .. "&startProvince=" .. urlEncode(startProvince) .. "&startCity=" .. urlEncode(startCity) .. "&startStrict=" .. urlEncode(startStrict) .. "&endProvince=" .. urlEncode(finishProvince) .. "&endCity=" .. urlEncode(finishCity) .. "&endStrict=" .. urlEncode(finishStrict) .. "&detail=" .. urlEncode(detailBox.text) .. "&weigh=" .. tonumber(tonNumField.text) .. "&volume=" .. tonumber(carNumField.text) .. "&bigType=" .. tonumber(bigType)  .. "&kind=" .. transType .. "&latitude=" .. tonumber(latitude) .. "&longitude=" .. tonumber(longitude)
 			local url = string.gsub(body," ","")
 			network.request("http://freshly.duapp.com/addInfos.php?" .. url,"GET",addInfos,params)
 			native.setActivityIndicator( true )
@@ -321,6 +402,7 @@ function addItem(event)
 end
 
 function addInfos( event )
+	Runtime:removeEventListener( "location", locationHandler )
 	if (event.isError) then
 		native.setActivityIndicator( false )
 		native.showAlert( "注意", "网络有问题" , { "好的" } )
@@ -337,6 +419,7 @@ function addInfos( event )
 			carNumField.text = ""
 			native.showAlert( "注意", "添加成功" , { "好的" } )
 			composer.gotoScene("profile")
+			globalVars.isShow = false
 			composer.removeScene( "addInfos" )
 		else
 			native.showAlert( "注意", "添加信息失败" , { "好的" } )
@@ -359,14 +442,27 @@ function backTo( event )
 	if ("ended" == event.phase) then
 		composer.gotoScene("profile")
 		globalVars.isShow = false
+		Runtime:removeEventListener( "location", locationHandler )
 	end
 end
+
+function locationHandler(event)
+
+	if (event.errorCode) then
+		native.showAlert( "注意", "定位发生错误" , { "知道啦" } )
+	else 
+		latitude = event.latitude
+		longitude = event.longitude
+	end
+end 
 
 
 scene:addEventListener("create",scene)
 scene:addEventListener("show",scene)
 scene:addEventListener("hide",scene)
 scene:addEventListener("destroy",scene)
+Runtime:addEventListener( "location", locationHandler )
+
 
 return scene
 

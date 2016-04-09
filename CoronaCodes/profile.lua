@@ -18,20 +18,26 @@ function scene:create( event )
 	local bg = display.newRect(0,0,width,height)
 	bg.anchorX = 0
 	bg.anchorY = 0
-	bg:setFillColor(0,0.5,0.5)
+	bg:setFillColor(0.878,0.945,0.957)
 	sceneGroup:insert(bg)
 
+	local bar = display.newRect(0,0,width,38)
+	bar.anchorX = 0
+	bar.anchorY = 0
+	bar:setFillColor(0.310,0.549,0.659)
+	sceneGroup:insert(bar)
+
 	local options = {
-		text = "设置",
+		text = "个人中心",
 		x = 0 ,
-		y = 0 ,
+		y = 8 ,
 		width = width,
-		height = 44,
-		fontSize = 24,
+		height = 64,
+		fontSize = 16,
 		align = "center"
 	}
 	local nav = display.newText(options)
-	nav:setFillColor(1,1,0)
+	nav:setFillColor(0.878,0.945,0.957)
 	nav.anchorX = 0
 	nav.anchorY = 0
 	sceneGroup:insert(nav)
@@ -39,14 +45,14 @@ function scene:create( event )
 	local userOptions = {
 		text = "status", 
 		x = 0 ,
-		y = 44 ,
+		y = 68 ,
 		width = width,
-		height = 64,
-		fontSize = 24,
+		height = 58,
+		fontSize = 18,
 		align = "center"
 	}
 	user = display.newText(userOptions)
-	user:setFillColor(1,1,0)
+	user:setFillColor(0.804,0.612,0.608)
 	user.anchorX = 0
 	user.anchorY = 0
 	
@@ -54,8 +60,8 @@ function scene:create( event )
 
 	--setup tableView
 	tableData = {}
-	tableData[1] = "我上传的车"
-	tableData[2] = "我上传的货"
+	tableData[1] = "我注册的车"
+	tableData[2] = "我发布的货"
 	tableData[3] = "添加货/车"
 	tableData[4] = "退出/登陆"
 
@@ -136,8 +142,6 @@ end
 
 function showTableView()
 	for i = 1,#tableData do
-		print("reload")
-		print(tableData[i])
 		list:insertRow {
 		rowHeight = 44,
 		isCategory = false,
