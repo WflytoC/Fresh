@@ -60,9 +60,8 @@ function scene:show( event )
 	if phase == "will" then
 		webView.isVisible = true
 		globalVars.tabBar.isVisible = false
-		--webView:request("http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:39.96554,116.26719;title:我在这里;addr:车主|coord:39.87803,116.19025;title:货主;addr:北京市丰台区射击场路15号北京园博园|coord:39.88129,116.27062;title:老成都;addr:北京市丰台区岳各庄梅市口路西府景园六号楼底商|coord:39.9982,116.19015;title:北京园博园成都园;addr:北京市丰台区园博园内&key=N22BZ-NJVWQ-M4K5D-GCMJS-T7XQ7-ZEBMY&referer=鲜速达")
 	elseif phase == "did" then
-
+	Runtime:addEventListener( "location", locationHandler )
 
 	end
 end
@@ -74,6 +73,7 @@ function scene:hide( event )
 	if phase == "will" then
 
 		webView.isVisible = false
+		Runtime:removeEventListener( "location", locationHandler )
 	elseif phase == "did" then
 
 	end
@@ -87,7 +87,6 @@ end
 
 
 function locationHandler(event)
-
 	if (event.errorCode) then
 
 		native.showAlert( "注意", "定位发生错误" , { "知道啦" } )
@@ -95,7 +94,6 @@ function locationHandler(event)
 		local latitude = event.latitude
 		local longitude = event.longitude
 		
-		if webView then
 
 
 			local params =  "http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:" .. latitude .. "," .. longitude .. ";title:我在这里;addr:您找得目标用红色针头标注"
@@ -111,11 +109,13 @@ function locationHandler(event)
 			end
 
 			params = params .. "&key=N22BZ-NJVWQ-M4K5D-GCMJS-T7XQ7-ZEBMY&referer=鲜速达"
+			print(params)
 			webView:request(params)
-
-end
-		Runtime:removeEventListener( "location", locationHandler )
+			
 	end
+
+	Runtime:removeEventListener( "location", locationHandler )
+
 end
 
 

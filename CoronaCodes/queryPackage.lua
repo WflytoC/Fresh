@@ -103,6 +103,7 @@ function scene:hide( event )
 	local phase = event.phase
 
 	if phase == "will" then
+		webView.isVisible = false
 		companyField.isVisible = false
 		orderField.isVisible = false
 	elseif phase == "did" then

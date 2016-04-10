@@ -71,7 +71,6 @@ end
 function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-
 	if phase == "will" then
 		globalVars.tabBar.isVisible = false
 		if (globalVars.target == 2) then
@@ -177,6 +176,7 @@ function backTo( event )
 	if ("ended" == event.phase) then
 	globalVars.isShow = false
 		composer.gotoScene(globalVars.origin)
+		composer.removeScene( "showSeeks" )
 	end
 end
 
